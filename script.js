@@ -13,18 +13,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const apologyBtn = document.getElementById('apology-btn');
     const apologyModal = document.getElementById('apology-modal');
     const apologyText = document.getElementById('apology-text');
-    const closeModalBtn = document.getElementById('close-modal-btn');
+    const closeModalBtn = document.getElementById('close-apology-modal-btn');
     const historyList = document.getElementById('history-list');
     const moodEmojis = document.querySelectorAll('.mood-emoji');
     const rewardCoins = document.getElementById('reward-coins');
     const rewardAmount = document.getElementById('reward-amount');
+    const rewardModal = document.getElementById('reward-modal');
+    const closeRewardModalBtn = document.getElementById('close-reward-modal-btn');
+
+    // Performance Rating Sliders and Report Card Grade Elements
+    const ratingSliders = document.querySelectorAll('.card input[type="range"]');
+    const reportCardGrades = {
+        '💖 Romance': document.getElementById('grade-romance'),
+        '😂 Humor': document.getElementById('grade-humor'),
+        '💪 Effort': document.getElementById('grade-effort'),
+        '👂 Listening': document.getElementById('grade-listening'),
+        '🥰 Care': document.getElementById('grade-care'),
+        '🗓️ Punctuality': document.getElementById('grade-punctuality'),
+        '🧠 Thoughtfulness': document.getElementById('grade-thoughtfulness'),
+    };
+    const overallGradeEl = document.getElementById('overall-grade');
 
 
     // --- STATE & DATA ---
     let cooldownInterval;
     let cooldownTime = 0; // in seconds
     let complaintId = 0;
-    let currentReward = 30;
+    let currentReward = 0; // Starting at 0 for the new feature
 
     const challenges = [
         "Plan a surprise date night!",
@@ -50,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loginSection.classList.add('hidden');
             dashboardSection.classList.remove('hidden');
             loginError.classList.add('hidden');
+            updateAllGrades(); // Initial grade update on login
         } else {
             loginError.classList.remove('hidden');
         }
@@ -122,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.target.remove(); // Remove the button after resolving
 
             // Add reward
-            currentReward += 10;
+            currentReward += 5;
             updateRewardJar();
         });
 
@@ -139,7 +155,51 @@ document.addEventListener('DOMContentLoaded', () => {
         rewardAmount.textContent = currentReward;
         const percentage = Math.min(currentReward, 100);
         rewardCoins.style.height = `${percentage}%`;
+
+        // Check if the jar is full
+        if (currentReward >= 100) {
+            rewardModal.classList.remove('hidden');
+            currentReward = 0; // Reset the jar
+            // updateRewardJar() is called implicitly by the next tick, no need for another call
+        }
     }
+
+    function getGrade(value) {
+        if (value >= 95) return 'A+';
+        if (value >= 90) return 'A';
+        if (value >= 85) return 'A-';
+        if (value >= 80) return 'B+';
+        if (value >= 75) return 'B';
+        if (value >= 70) return 'B-';
+        if (value >= 65) return 'C+';
+        if (value >= 60) return 'C';
+        if (value >= 55) return 'C-';
+        if (value >= 50) return 'D+';
+        if (value >= 40) return 'D';
+        return 'F';
+    }
+
+    function updateAllGrades() {
+        let totalScore = 0;
+        let ratingCount = 0;
+        ratingSliders.forEach(slider => {
+            const ratingName = slider.previousElementSibling.textContent;
+            const grade = getGrade(parseInt(slider.value));
+            const gradeElement = reportCardGrades[ratingName];
+            if (gradeElement) {
+                gradeElement.textContent = grade;
+                // Summing up for overall grade (using a simple average)
+                totalScore += parseInt(slider.value);
+                ratingCount++;
+            }
+        });
+
+        if (ratingCount > 0) {
+            const averageScore = totalScore / ratingCount;
+            overallGradeEl.textContent = getGrade(averageScore);
+        }
+    }
+
 
     // --- EVENT LISTENERS ---
     loginBtn.addEventListener('click', handleLogin);
@@ -175,10 +235,20 @@ document.addEventListener('DOMContentLoaded', () => {
         apologyModal.classList.add('hidden');
     });
 
+    closeRewardModalBtn.addEventListener('click', () => {
+        rewardModal.classList.add('hidden');
+        updateRewardJar();
+    });
+
     moodEmojis.forEach(emoji => {
         emoji.addEventListener('click', () => {
             moodEmojis.forEach(e => e.classList.remove('selected'));
             emoji.classList.add('selected');
         });
+    });
+
+    // Event listener for all sliders to update the report card
+    ratingSliders.forEach(slider => {
+        slider.addEventListener('input', updateAllGrades);
     });
 });
