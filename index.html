@@ -52,10 +52,6 @@
                                 <button class="complaint-category btn text-sm flex-1 bg-pink-200 hover:bg-pink-300 text-pink-800 p-2">Time Together</button>
                             </div>
                         </div>
-                        <div>
-                            <p class="font-semibold text-sm mb-2">Attach GIF/Meme:</p>
-                            <input id="gif-input" type="text" placeholder="Paste GIF/Meme URL here..." class="w-full p-2 text-sm rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-300">
-                        </div>
                         <textarea id="emoji-feedback" placeholder="Emoji-only feedback here... 😀😍😢😡" class="w-full p-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-300" rows="1"></textarea>
                         <button id="submit-complaint-btn" class="btn w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-white py-3">File Complaint</button>
                     </div>
@@ -88,6 +84,7 @@
                         <span class="mood-emoji text-5xl" data-mood="Neutral">😐</span>
                         <span class="mood-emoji text-5xl" data-mood="Sad">😟</span>
                         <span class="mood-emoji text-5xl" data-mood="Loved">😍</span>
+                        <span class="mood-emoji text-5xl" data-mood="Angry">😡</span>
                     </div>
                 </div>
                 <div class="card p-6">
@@ -172,7 +169,7 @@
                                 <div class="strike-card red-card">0</div>
                             </div>
                         </div>
-                        <div>
+                        <div id="courtroom-icon" class="cursor-pointer">
                             <h3 class="text-lg font-bold mb-2">BF Courtroom</h3>
                             <div class="text-5xl gavel">⚖️</div>
                             <p class="text-xs mt-1 text-gray-500">For serious issues!</p>
@@ -215,6 +212,15 @@
             <div class="text-5xl mb-4">🏆</div>
             <h2 class="text-2xl font-bold mb-2">Jar Full!</h2>
             <p class="text-gray-600">Reward Mr. Boyfriend!</p>
+        </div>
+    </div>
+
+    <div id="courtroom-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden">
+        <div class="card p-8 max-w-sm w-full text-center relative">
+            <button id="close-courtroom-modal-btn" class="absolute top-3 right-4 text-2xl text-gray-500 hover:text-gray-800">&times;</button>
+            <div class="text-5xl mb-4">🚧</div>
+            <h2 class="text-2xl font-bold mb-2">COMING SOON!</h2>
+            <p class="text-gray-600">Please wait darling!!</p>
         </div>
     </div>
 

@@ -13,13 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const apologyBtn = document.getElementById('apology-btn');
     const apologyModal = document.getElementById('apology-modal');
     const apologyText = document.getElementById('apology-text');
-    const closeModalBtn = document.getElementById('close-apology-modal-btn');
+    const closeApologyModalBtn = document.getElementById('close-apology-modal-btn');
     const historyList = document.getElementById('history-list');
     const moodEmojis = document.querySelectorAll('.mood-emoji');
     const rewardCoins = document.getElementById('reward-coins');
     const rewardAmount = document.getElementById('reward-amount');
     const rewardModal = document.getElementById('reward-modal');
     const closeRewardModalBtn = document.getElementById('close-reward-modal-btn');
+    const courtroomIcon = document.getElementById('courtroom-icon');
+    const courtroomModal = document.getElementById('courtroom-modal');
+    const closeCourtroomModalBtn = document.getElementById('close-courtroom-modal-btn');
 
     // Performance Rating Sliders and Report Card Grade Elements
     const ratingSliders = document.querySelectorAll('.card input[type="range"]');
@@ -99,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function addComplaintToHistory() {
         const text = document.getElementById('complaint-text').value;
-        const gif = document.getElementById('gif-input').value;
         const emoji = document.getElementById('emoji-feedback').value;
         const selectedCategory = document.querySelector('.complaint-category.active');
 
@@ -118,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${selectedCategory ? `<span class="text-xs font-bold text-white px-2 py-1 rounded-full ${selectedCategory.classList.contains('bg-purple-200') ? 'bg-purple-500' : selectedCategory.classList.contains('bg-yellow-200') ? 'bg-yellow-500' : 'bg-pink-500'}">${selectedCategory.textContent}</span>` : ''}
                     <p class="font-semibold mt-1">${text || 'Emoji feedback given.'}</p>
                     ${emoji ? `<p class="text-2xl">${emoji}</p>` : ''}
-                    ${gif ? `<img src="${gif}" class="mt-2 max-w-full rounded-lg h-auto" style="max-height: 150px;">` : ''}
                 </div>
                 <span class="status-badge bg-orange-200 text-orange-800 text-xs font-semibold px-2.5 py-1 rounded-full">Pending</span>
             </div>
@@ -144,7 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Clear inputs
         document.getElementById('complaint-text').value = '';
-        document.getElementById('gif-input').value = '';
         document.getElementById('emoji-feedback').value = '';
         if (selectedCategory) selectedCategory.classList.remove('active', 'ring-2', 'ring-offset-2', 'ring-indigo-500');
 
@@ -231,13 +231,21 @@ document.addEventListener('DOMContentLoaded', () => {
         apologyModal.classList.remove('hidden');
     });
 
-    closeModalBtn.addEventListener('click', () => {
+    closeApologyModalBtn.addEventListener('click', () => {
         apologyModal.classList.add('hidden');
     });
 
     closeRewardModalBtn.addEventListener('click', () => {
         rewardModal.classList.add('hidden');
         updateRewardJar();
+    });
+
+    courtroomIcon.addEventListener('click', () => {
+        courtroomModal.classList.remove('hidden');
+    });
+
+    closeCourtroomModalBtn.addEventListener('click', () => {
+        courtroomModal.classList.add('hidden');
     });
 
     moodEmojis.forEach(emoji => {
