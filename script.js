@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const courtroomIcon = document.getElementById('courtroom-icon');
     const courtroomModal = document.getElementById('courtroom-modal');
     const closeCourtroomModalBtn = document.getElementById('close-courtroom-modal-btn');
+    const daysTogetherEl = document.getElementById('days-together');
+    const anniversaryDateEl = document.getElementById('anniversary-date');
+
 
     // Performance Rating Sliders and Report Card Grade Elements
     const ratingSliders = document.querySelectorAll('.card input[type="range"]');
@@ -43,6 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let cooldownTime = 0; // in seconds
     let complaintId = 0;
     let currentReward = 0; // Starting at 0 for the new feature
+
+    // Annivesary Date - Set this to your actual anniversary date
+    const anniversary = new Date('2025-03-10'); 
 
     const challenges = [
         "Plan a surprise date night!",
@@ -69,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dashboardSection.classList.remove('hidden');
             loginError.classList.add('hidden');
             updateAllGrades(); // Initial grade update on login
+            updateAnniversary();
         } else {
             loginError.classList.remove('hidden');
         }
@@ -160,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentReward >= 100) {
             rewardModal.classList.remove('hidden');
             currentReward = 0; // Reset the jar
-            // updateRewardJar() is called implicitly by the next tick, no need for another call
         }
     }
 
@@ -188,7 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const gradeElement = reportCardGrades[ratingName];
             if (gradeElement) {
                 gradeElement.textContent = grade;
-                // Summing up for overall grade (using a simple average)
                 totalScore += parseInt(slider.value);
                 ratingCount++;
             }
@@ -198,6 +203,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const averageScore = totalScore / ratingCount;
             overallGradeEl.textContent = getGrade(averageScore);
         }
+    }
+
+    function updateAnniversary() {
+        const today = new Date();
+        const differenceInTime = today.getTime() - anniversary.getTime();
+        const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+        daysTogetherEl.textContent = differenceInDays;
+
+        const anniversaryFormatted = anniversary.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        anniversaryDateEl.textContent = anniversaryFormatted;
     }
 
 
