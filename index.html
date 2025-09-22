@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relationship Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-gray-800 p-4">
+
+    <div id="login-section" class="w-full max-w-md mx-auto">
+        <div class="card p-8 text-center">
+            <div class="text-6xl mb-4">🔐</div>
+            <h1 class="text-3xl font-bold text-gray-700 mb-2">Relationship Report</h1>
+            <p class="text-gray-500 mb-6">Login to your love-life dashboard!</p>
+            <div id="login-error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded-lg relative mb-4 hidden">
+                <strong class="font-bold">Oops!</strong>
+                <span class="block sm:inline">Wrong credentials. Try 'ankita' & 'ankita'.</span>
+            </div>
+            <div class="space-y-4">
+                <input id="username" type="text" placeholder="Username" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-300 transition">
+                <input id="password" type="password" placeholder="Password" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-300 transition">
+            </div>
+            <button id="login-btn" class="btn w-full mt-6 bg-gradient-to-r from-pink-400 to-rose-400 text-white py-3">LOGIN!</button>
+        </div>
+    </div>
+
+    <div id="dashboard-section" class="hidden w-full max-w-7xl mx-auto">
+        <header class="w-full bg-white/80 backdrop-blur-sm p-4 rounded-2xl shadow-md mb-6 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-indigo-600">💕 Relationship Report</h1>
+            <div class="text-right">
+                <p class="font-semibold">Hey, Anks! 👋</p>
+                <p class="text-sm text-gray-500">Let's check in on the relationship status.</p>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-1 space-y-6">
+                <div class="card p-6">
+                    <h2 class="text-xl font-bold mb-4">New Complaint</h2>
+                    <div class="space-y-4">
+                        <textarea id="complaint-text" placeholder="What's on your mind?..." class="w-full p-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-300" rows="3"></textarea>
+                        <div>
+                            <p class="font-semibold text-sm mb-2">Category:</p>
+                            <div class="flex space-x-2">
+                                <button class="complaint-category btn text-sm flex-1 bg-purple-200 hover:bg-purple-300 text-purple-800 p-2">Habits</button>
+                                <button class="complaint-category btn text-sm flex-1 bg-yellow-200 hover:bg-yellow-300 text-yellow-800 p-2">Communication</button>
+                                <button class="complaint-category btn text-sm flex-1 bg-pink-200 hover:bg-pink-300 text-pink-800 p-2">Time Together</button>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-sm mb-2">Attach GIF/Meme:</p>
+                            <input id="gif-input" type="text" placeholder="Paste GIF/Meme URL here..." class="w-full p-2 text-sm rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                        </div>
+                        <textarea id="emoji-feedback" placeholder="Emoji-only feedback here... 😀😍😢😡" class="w-full p-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-300" rows="1"></textarea>
+                        <button id="submit-complaint-btn" class="btn w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-white py-3">File Complaint</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="card p-4 text-center">
+                        <h3 class="font-bold">Cooldown Timer</h3>
+                        <p id="cooldown-timer" class="text-3xl font-mono font-bold text-indigo-600 my-2">00:00</p>
+                        <p class="text-xs text-gray-500">No spamming allowed!</p>
+                    </div>
+                    <div class="card p-4 text-center flex flex-col justify-center">
+                        <h3 class="font-bold">BF Apology</h3>
+                        <button id="apology-btn" class="btn mt-2 bg-rose-400 text-white text-sm py-2 px-3">Generator</button>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-xl font-bold mb-4">Complaint History</h2>
+                    <div id="history-list" class="space-y-3 max-h-96 overflow-y-auto pr-2">
+                        </div>
+                </div>
+
+            </div>
+
+            <div class="lg:col-span-1 space-y-6">
+                <div class="card p-6">
+                    <h2 class="text-xl font-bold mb-4">Daily Mood Check-in</h2>
+                    <div class="flex justify-around items-center">
+                        <span class="mood-emoji text-5xl" data-mood="Happy">😊</span>
+                        <span class="mood-emoji text-5xl" data-mood="Neutral">😐</span>
+                        <span class="mood-emoji text-5xl" data-mood="Sad">😟</span>
+                        <span class="mood-emoji text-5xl" data-mood="Loved">😍</span>
+                        <span class="mood-emoji text-5xl" data-mood="Angry">😡</span>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-xl font-bold mb-4">Performance Ratings</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="font-semibold">💖 Romance</label>
+                            <input type="range" min="0" max="100" value="50" class="w-full">
+                        </div>
+                        <div>
+                            <label class="font-semibold">😂 Humor</label>
+                            <input type="range" min="0" max="100" value="75" class="w-full">
+                        </div>
+                        <div>
+                            <label class="font-semibold">💪 Effort</label>
+                            <input type="range" min="0" max="100" value="60" class="w-full">
+                        </div>
+                        <div>
+                            <label class="font-semibold">👂 Listening</label>
+                            <input type="range" min="0" max="100" value="40" class="w-full">
+                        </div>
+                        <div>
+                            <label class="font-semibold">🥰 Care</label>
+                            <input type="range" min="0" max="100" value="80" class="w-full">
+                        </div>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <h2 class="text-xl font-bold mb-4">BF Report Card</h2>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center bg-gray-100 p-3 rounded-lg">
+                            <span class="font-semibold">Overall Grade</span>
+                            <span class="text-2xl font-bold text-green-500">F</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Punctuality</span>
+                            <span class="font-semibold text-orange-500">E-</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Thoughtfulness</span>
+                            <span class="font-semibold text-green-500">A+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 space-y-6">
+                <div class="card p-6">
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <div>
+                            <h3 class="text-lg font-bold mb-2">Strike System</h3>
+                            <div class="flex justify-center space-x-2">
+                                <div class="strike-card yellow-card">1</div>
+                                <div class="strike-card red-card">0</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold mb-2">BF Courtroom</h3>
+                            <div class="text-5xl gavel">⚖️</div>
+                            <p class="text-xs mt-1 text-gray-500">For serious issues!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-6 text-center">
+                    <h2 class="text-xl font-bold mb-2">Reward Jar</h2>
+                    <p class="text-sm text-gray-500 mb-2">Improvements unlock rewards!</p>
+                    <div class="reward-jar-glass">
+                        <div id="reward-coins" class="coins" style="height: 0%;"></div>
+                    </div>
+                    <p class="mt-2 font-bold text-lg"><span id="reward-amount">0</span> BF Bucks</p>
+                </div>
+
+                <div class="card p-6 text-center">
+                    <h2 class="text-xl font-bold mb-4">Random Challenge</h2>
+                    <div id="challenge-box" class="min-h-[60px] bg-indigo-100 text-indigo-800 font-semibold p-4 rounded-lg flex items-center justify-center">
+                        Click the button for a task!
+                    </div>
+                    <button id="challenge-btn" class="btn w-full mt-4 bg-gradient-to-r from-green-400 to-teal-400 text-white py-2">New Challenge!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="apology-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden">
+        <div class="card p-8 max-w-sm w-full text-center relative">
+            <button id="close-modal-btn" class="absolute top-3 right-4 text-2xl text-gray-500 hover:text-gray-800">&times;</button>
+            <div class="text-5xl mb-4">🙏</div>
+            <h2 class="text-2xl font-bold mb-2">Generated Apology</h2>
+            <p id="apology-text" class="text-gray-600">My bad! I have the emotional range of a teaspoon sometimes.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
