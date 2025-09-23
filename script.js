@@ -254,7 +254,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') handleLogin();
     });
 
-    submitComplaintBtn.addEventListener('click', () => {
+    submitComplaintBtn.addEventListener('click', (e) => {
+        e.preventDefault();
         if (addComplaintToHistory()) {
             startCooldown(10); // 10 second cooldown for demo
         }
