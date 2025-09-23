@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentReward = 0; // Starting at 0 for the new feature
 
     // Annivesary Date - Set this to your actual anniversary date
-    const anniversary = new Date('2025-03-10'); 
+    const anniversary = new Date('2025-03-10');
 
     const challenges = [
         "Plan a surprise date night!",
@@ -69,6 +69,26 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // --- FUNCTIONS ---
+    // Function to send data to the Google Apps Script Web App
+    async function sendDataToSheets(data) {
+        // REPLACE THIS URL WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
+        const url = 'https://script.google.com/macros/s/AKfycbynkA3z5qpCHrSJQS52D5s56cCYDFWYmat6hzd-QYs9JIdND_qffy4BNpiUdQlzkJbc/exec';
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const result = await response.json();
+            console.log('Success:', result);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
     function handleLogin() {
         if (usernameInput.value.toLowerCase() === 'ankita' && passwordInput.value === 'ankita') {
             loginSection.classList.add('hidden');
@@ -116,6 +136,14 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Please enter a complaint or some emoji feedback.");
             return false;
         }
+
+        // Prepare data to send to Google Sheets
+        const complaintData = {
+            text: text,
+            category: selectedCategory ? selectedCategory.textContent : '',
+            emoji: emoji
+        };
+        sendDataToSheets(complaintData);
 
         complaintId++;
         const newComplaint = document.createElement('div');
